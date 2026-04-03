@@ -1,0 +1,97 @@
+# VortexDL Configuration File
+# Place at ~/.config/vortexdl/config.yaml or ./vortexdl.yaml
+
+# ─── Default Settings ───────────────────────────────────────────────────────
+defaults:
+  format: "bestvideo[height<=1080]+bestaudio/best"
+  output: "~/Downloads/%(uploader)s/%(title)s.%(ext)s"
+  retries: 10
+  concurrent: 4
+  rate_limit: null              # e.g. "2M" for 2 MB/s cap
+  no_overwrite: false
+  continue_dl: true
+  embed_metadata: true
+  embed_thumbnail: false
+  write_info_json: false
+  write_thumbnail: false
+  proxy: null                   # e.g. "socks5://127.0.0.1:1080"
+  cookies_from_browser: null    # chrome | firefox | safari | edge
+  cookies_file: null
+  sponsorblock: false
+  sponsorblock_categories:
+    - sponsor
+    - selfpromo
+    - interaction
+  subtitles: false
+  subtitle_languages: ["en"]
+  embed_subtitles: false
+
+# ─── Named Profiles ──────────────────────────────────────────────────────────
+# Activate with: vortexdl --profile NAME URL
+profiles:
+  audio:
+    extract_audio: true
+    audio_format: mp3
+    audio_quality: "0"
+    output: "~/Music/%(uploader)s/%(title)s.%(ext)s"
+    embed_thumbnail: true
+    embed_metadata: true
+
+  4k:
+    format: "bestvideo[height<=2160]+bestaudio/best"
+    output: "~/Videos/4K/%(title)s [%(id)s].%(ext)s"
+
+  archive:
+    format: "bestvideo+bestaudio/best"
+    output: "~/Archive/%(uploader)s/%(upload_date)s - %(title)s [%(id)s].%(ext)s"
+    write_info_json: true
+    write_thumbnail: true
+    embed_metadata: true
+    no_overwrite: true
+
+  podcast:
+    extract_audio: true
+    audio_format: m4a
+    audio_quality: "128K"
+    output: "~/Podcasts/%(uploader)s/%(upload_date)s - %(title)s.%(ext)s"
+
+  quick:
+    format: "best[height<=480]/best"
+    rate_limit: "1M"
+
+# ─── Site-Specific Overrides ─────────────────────────────────────────────────
+# Applied automatically when URL matches the site
+sites:
+  youtube.com:
+    sponsorblock: true
+    sponsorblock_categories:
+      - sponsor
+      - intro
+      - outro
+      - selfpromo
+      - preview
+    format: "bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best"
+
+  twitch.tv:
+    format: best
+    live_from_start: true
+    concurrent: 8
+
+  soundcloud.com:
+    extract_audio: true
+    audio_format: mp3
+    audio_quality: "0"
+
+  bandcamp.com:
+    extract_audio: true
+    audio_format: flac
+
+# ─── Web UI Settings ─────────────────────────────────────────────────────────
+web:
+  host: "127.0.0.1"
+  port: 8080
+  auth: false                   # Set to true to enable login
+  username: "admin"
+  password: "changeme"
+  max_concurrent_jobs: 5
+  history_limit: 100
